@@ -7,7 +7,6 @@
 
 int main() {
   auto start_time = std::chrono::high_resolution_clock::now();
-  omp_set_num_threads(1);
 
   int n = 1e+9;
   int range = 100;
@@ -52,7 +51,6 @@ int main() {
 
 }
 
-//My desktop i9-12900K @3.20GHz, DDR4 32GB 3600MHz
 //Single thread part, n = 1e+9, 10.8 sec;  n = 2e+9, 22.3 sec
 //n = 1e+9,  1 thread   11.8  sec
 //n = 1e+9, 24 threads  11.5  sec
