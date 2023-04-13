@@ -51,6 +51,8 @@ int main() {
   std::cout << "Single thread calculate time: " << elapsed_time.count() << " seconds" << std::endl;
 
   auto openMP_start_time = std::chrono::high_resolution_clock::now();
+//#pragma omp parallel
+//#pragma omp single
   merge_sort(vec, 0, n-1);
   end_time = std::chrono::high_resolution_clock::now();
 
