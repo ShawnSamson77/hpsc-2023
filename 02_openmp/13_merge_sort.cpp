@@ -37,7 +37,6 @@ void merge_sort(std::vector<int>& vec, int begin, int end) {
 
 int main() {
   auto start_time = std::chrono::high_resolution_clock::now();
-  omp_set_num_threads(24);
   int n = 5e+7;
   std::vector<int> vec(n);
 
@@ -52,8 +51,6 @@ int main() {
   std::cout << "Single thread calculate time: " << elapsed_time.count() << " seconds" << std::endl;
 
   auto openMP_start_time = std::chrono::high_resolution_clock::now();
-//#pragma omp parallel
-//#pragma omp single
   merge_sort(vec, 0, n-1);
   end_time = std::chrono::high_resolution_clock::now();
 
@@ -66,7 +63,6 @@ int main() {
 
 }
 
-//My desktop i9-12900K @3.20GHz, DDR4 32GB 3600MHz
 //Single thread part, n = 1e+8, 1.3 sec;  n = 2e+8, 2.2 sec;
 //n = 1e+8,  1 thread   14.1  sec
 //n = 1e+8, 24 threads  14.0  sec
