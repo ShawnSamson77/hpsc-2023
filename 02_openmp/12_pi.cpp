@@ -3,7 +3,6 @@
 #include <time.h>
 
 int main() {
-  omp_set_num_threads(8);
   int n = 2e+9;
   double dx = 1. / n;
   double pi = 0;
