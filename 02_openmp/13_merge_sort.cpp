@@ -26,9 +26,9 @@ void merge(std::vector<int>& vec, int begin, int mid, int end) {
 void merge_sort(std::vector<int>& vec, int begin, int end) {
   if(begin < end) {
     int mid = (begin + end) / 2;
-#pragma omp task shared(vec) firstprivate(begin,mid)
+#pragma omp task shared(vec) //firstprivate(begin,mid)
     merge_sort(vec, begin, mid);
-#pragma omp task shared(vec) firstprivate(mid,end)
+#pragma omp task shared(vec) //firstprivate(mid,end)
     merge_sort(vec, mid+1, end);
 #pragma omp taskwait
     merge(vec, begin, mid, end);
@@ -37,9 +37,9 @@ void merge_sort(std::vector<int>& vec, int begin, int end) {
 
 int main() {
   auto start_time = std::chrono::high_resolution_clock::now();
-  int n = 5e+7;
-  std::vector<int> vec(n);
 
+  int n = 1e+7;
+  std::vector<int> vec(n);
   for (int i=0; i<n; i++) {
     vec[i] = rand() % (10 * n);
     //printf("%d ",vec[i]);
@@ -51,9 +51,11 @@ int main() {
   std::cout << "Single thread calculate time: " << elapsed_time.count() << " seconds" << std::endl;
 
   auto openMP_start_time = std::chrono::high_resolution_clock::now();
-//#pragma omp parallel
-//#pragma omp single
+#pragma omp parallel
+{
+#pragma omp single
   merge_sort(vec, 0, n-1);
+}
   end_time = std::chrono::high_resolution_clock::now();
 
   //for (int i=0; i<n; i++) {printf("%d ",vec[i]);}
@@ -62,12 +64,9 @@ int main() {
   std::chrono::duration<double> All_time = end_time - start_time;
   std::cout << "openMP calculate time: " << elapsed_time.count() << " seconds" << std::endl;
   std::cout << "Total calculate time: " << All_time.count() << " seconds" << std::endl;
-
 }
-
-//Single thread part, n = 1e+8, 1.3 sec;  n = 2e+8, 2.2 sec;
-//n = 1e+8,  1 thread   14.1  sec
-//n = 1e+8, 24 threads  14.0  sec
-
-//n = 2e+8,  1 thread   28.9  sec
-//n = 2e+8, 24 threads  28.8  sec
+//My laptop i7-1185G7 @3.00GHz, DDR4 16GB 4267MHz
+//Single thread part, n = 1e+7, 0.07 sec;
+//n = 1e+7,  1 thread   2.08  sec
+//n = 1e+7,  8 threads  8.86  sec
+//g++ 13_merge_sort.cpp -fopenmp -O3
