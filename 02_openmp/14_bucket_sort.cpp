@@ -22,9 +22,9 @@ int main() {
   std::cout << "Single thread calculate time: " << elapsed_time.count() << " seconds" << std::endl;
   auto openMP_start_time = std::chrono::high_resolution_clock::now();
 
-//#pragma omp parallel for
+#pragma omp parallel for
   for (int i=0; i<n; i++)
-//#pragma omp atomic update    //Single thread faster than omp atomic update
+#pragma omp atomic update    //Single thread faster than omp atomic update
     bucket[key[i]]++;
 
   std::vector<int> offset(range,0);
