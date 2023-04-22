@@ -31,14 +31,14 @@ int main() {
   __m256 mask, rxvec, ryvec, rvec, m3rvec, fxvec, fyvec;
 
   for(int i=0; i<N; i++) {
-    mask = _mm256_cmp_ps(_mm256_set1_ps(i), jvec, _CMP_EQ_OQ);  //if i == j output=1 else output=0
+    mask = _mm256_cmp_ps(_mm256_set1_ps(i), jvec, _CMP_EQ_OQ);  //if i == j mask=1, else mask=0
 
     rxvec = _mm256_sub_ps(_mm256_set1_ps(x[i]), xvec);  //rx = x[i] -x [j]
     ryvec = _mm256_sub_ps(_mm256_set1_ps(y[i]), yvec);  //ry = y[i] - y[j]
     rvec = _mm256_sqrt_ps(_mm256_add_ps(_mm256_mul_ps(rxvec, rxvec), _mm256_mul_ps(ryvec, ryvec)));  //sqrt(rx*rx+ry*ry)
 
     m3rvec = _mm256_div_ps(mvec, _mm256_mul_ps(_mm256_mul_ps(rvec, rvec), rvec));  //  m / (r*r*r)
-    fxvec = _mm256_blendv_ps(_mm256_mul_ps(m3rvec, rxvec), _mm256_set1_ps(0), mask);  //if mask==1 -> 0, mask==0 -> calculate
+    fxvec = _mm256_blendv_ps(_mm256_mul_ps(m3rvec, rxvec), _mm256_set1_ps(0), mask);  //if mask==0 -> calculate, mask==1 -> f=0
     fyvec = _mm256_blendv_ps(_mm256_mul_ps(m3rvec, ryvec), _mm256_set1_ps(0), mask);
 
     fx[i] -= reduce(N, fxvec);
