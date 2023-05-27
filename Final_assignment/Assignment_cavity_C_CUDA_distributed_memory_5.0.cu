@@ -46,7 +46,7 @@ int main(){
     double *pn = (double*)malloc(size);
     double *b = (double*)malloc(size);
 
-    const double MLU = (nx-1) * (ny-1) * nt / 1.e+6; //Mega Lattice Update
+    const double MLU = (nx-1) * (ny-1) * (nt / 1.e+6); //Mega Lattice Update
     double MLUPS = 0.0; //Mega Lattice Update Per Second
 
     initialize_variables(u, v, p, un, vn, pn, b);  //0 initialize velocity and pressure
