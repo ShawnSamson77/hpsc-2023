@@ -7,8 +7,8 @@
 #include<iostream>
 #include"vtr_writer.hpp"
 
-//nx=41,ny=41,nt=10000, my laptop 17.79MLUPS, my desktop 21.47 MLUPS, tsubame 8.91MLUPS,  g++ Assignment_cavity_C_2.0.cpp -O3 -march=native  (module load nvhpc gcc)
-//nx=41,ny=41,nt=10000, tsubame P100x1  1.315MLUPS, nvcc Assignment_cavity_C_CUDA_distributed_memory_5.0 -O3 -arch=sm_60   (module load nvhpc gcc)
+//nx=41,ny=41,nt=10000, my laptop 17.79MLUPS, my desktop 21.47 MLUPS, tsubame 8.91MLUPS,  g++ Assignment_cavity_C_2.0.cpp -O3 -march=native  (module load gcc nvhpc)
+//nx=41,ny=41,nt=10000, tsubame P100x1  1.315MLUPS, nvcc Assignment_cavity_C_CUDA_distributed_memory_5.0 -O3 -arch=sm_60 -Xcompiler "-march=native"   (module load gcc nvhpc)
 
 const int nx = 40 + 1; 
 const int ny = 40 + 1;
